@@ -4,4 +4,3 @@ dist/
 backend-dist/
 .env
 .DS_Store
-scripts/
