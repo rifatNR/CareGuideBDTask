@@ -8,9 +8,13 @@ async function main() {
     const app = express();
     app.use(express.json());
     app.use((req, res, next) => {
-        const allowedOrigin = process.env.FRONTEND_URL;
-        if (allowedOrigin && req.headers.origin === allowedOrigin) {
-            res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+        const requestOrigin = req.headers.origin?.replace(/\/+$/, '');
+        const allowedOrigins = (process.env.FRONTEND_URL ?? '')
+            .split(',')
+            .map((origin) => origin.trim().replace(/\/+$/, ''))
+            .filter(Boolean);
+        if (requestOrigin && allowedOrigins.includes(requestOrigin)) {
+            res.setHeader('Access-Control-Allow-Origin', requestOrigin);
             res.setHeader('Vary', 'Origin');
             res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
             res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');

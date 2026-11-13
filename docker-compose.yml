@@ -1,6 +1,8 @@
 services:
     api:
         build: .
+        ports:
+            - '4000:4000'
         environment:
             MONGO_URI: mongodb://mongo:27017/secure-notes
             JWT_SECRET: local-development-secret-change-me
