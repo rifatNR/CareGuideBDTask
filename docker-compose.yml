@@ -1,0 +1,29 @@
+services:
+    api:
+        build: .
+        environment:
+            MONGO_URI: mongodb://mongo:27017/secure-notes
+            JWT_SECRET: local-development-secret-change-me
+            PORT: 4000
+        depends_on:
+            mongo:
+                condition: service_healthy
+    frontend:
+        build: .
+        command: ['pnpm', 'exec', 'vite', '--host', '0.0.0.0', '--port', '5173']
+        ports:
+            - '5173:5173'
+        depends_on:
+            - api
+    mongo:
+        image: mongo:7
+        restart: unless-stopped
+        volumes:
+            - mongo_data:/data/db
+        healthcheck:
+            test: ['CMD', 'mongosh', '--quiet', '--eval', "db.adminCommand('ping').ok"]
+            interval: 5s
+            timeout: 3s
+            retries: 15
+volumes:
+    mongo_data:
