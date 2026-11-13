@@ -9,6 +9,7 @@
         "build": "vite build && tsc --noEmit && node scripts/build-backend.mjs",
         "build:frontend": "vite build",
         "build:backend": "tsc --noEmit && node scripts/build-backend.mjs",
+        "seed:demo": "tsx scripts/seed-demo.ts",
         "start": "tsx server/index.ts",
         "format": "prettier --write ."
     },

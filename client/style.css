@@ -106,6 +106,20 @@ select:focus {
 .auth-box > .link {
     margin-top: 14px;
 }
+.demo-logins {
+    display: grid;
+    gap: 8px;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid #e6e9e6;
+}
+.demo-logins .eyebrow,
+.demo-logins .muted {
+    margin: 0;
+}
+.demo-login-button {
+    width: 100%;
+}
 .error {
     color: #a3342c;
     font-size: 13px;

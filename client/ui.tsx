@@ -76,6 +76,19 @@ export default function App() {
             setError(e.message);
         }
     }
+    async function demoLogin(email: string) {
+        setError('');
+        try {
+            const result = await request('/auth/login', {
+                method: 'POST',
+                body: JSON.stringify({ email, password: 'demo1234' }),
+            });
+            localStorage.setItem('token', result.token);
+            setUser(result.user as User);
+        } catch (e: any) {
+            setError(e.message);
+        }
+    }
     async function saveNote(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const data = Object.fromEntries(new FormData(event.currentTarget));
@@ -168,6 +181,24 @@ export default function App() {
                             {mode === 'login' ? 'Sign in' : 'Register'}
                         </button>
                     </form>
+                    {mode === 'login' && (
+                        <div className="demo-logins">
+                            <p className="eyebrow">QUICK DEMO LOGIN</p>
+                            <button
+                                className="secondary demo-login-button"
+                                onClick={() => void demoLogin('admin.demo@example.com')}
+                            >
+                                Admin demo
+                            </button>
+                            <button
+                                className="secondary demo-login-button"
+                                onClick={() => void demoLogin('test.user@example.com')}
+                            >
+                                Test user demo
+                            </button>
+                            <p className="muted">Password for both: demo1234</p>
+                        </div>
+                    )}
                     <button
                         className="link"
                         onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
